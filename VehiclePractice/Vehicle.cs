@@ -9,11 +9,11 @@ namespace VehiclePractice
 		private string vinNumber;
 		private int year;
 		private string make;
-		private int model;
+		private string model;
 		private string color;
 		private int mPG;
 
-		public Vehicle(string v, int year, string make, int model, string color, int mpg)
+		public Vehicle(string v, int year, string make, string model, string color, int mpg)
 		{
 			vinNumber = v;
 			this.year = year;
@@ -41,7 +41,7 @@ namespace VehiclePractice
 			set { make = value; }
 		}
 
-		public int Model
+		public string Model
 		{
 			get { return model; }
 			set { model = value; }
