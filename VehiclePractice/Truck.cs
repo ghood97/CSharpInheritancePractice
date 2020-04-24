@@ -10,7 +10,7 @@ namespace VehiclePractice
 		private int numWheels;
 
 		public Truck(string v, int year, string make, string model, string color, int mpg, bool tow, int wheels)
-			:base(v, year, make, model, color, mpg)
+			: base(v, year, make, model, color, mpg)
 		{
 			this.towPackage = tow;
 			this.numWheels = wheels;
