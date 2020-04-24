@@ -66,7 +66,7 @@ namespace VehiclePractice
 
 		public override string ToString()
 		{
-			return "Vin #: " + vinNumber + "\nYear: " + year + "\nMake: " + make + "\nModel: " + model + "\nColor: " + color + "\n Miles/Gallon: " + mPG;
+			return "Vin #: " + vinNumber + "\nYear: " + year + "\nMake: " + make + "\nModel: " + model + "\nColor: " + color + "\nMiles/Gallon: " + mPG;
 		}
 
 	}

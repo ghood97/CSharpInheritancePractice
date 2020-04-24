@@ -30,7 +30,7 @@ namespace VehiclePractice
 
 		public override string ToString()
 		{
-			return base.ToString() + "\nType: " + type + "\nHatchback?:" + (hatchback ? "Yes" : "No");
+			return base.ToString() + "\nType: " + type + "\nHatchback?: " + (hatchback ? "Yes" : "No");
 		}
 
 	}
