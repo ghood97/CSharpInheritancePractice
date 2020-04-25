@@ -14,6 +14,7 @@ namespace VehiclePractice
         public static char selection;
         static void Main(string[] args)
         {
+            Console.WriteLine("\nWelcome to your vehicle inventory");
             do
             {
                 DisplayMenu();
@@ -36,7 +37,8 @@ namespace VehiclePractice
                         Console.WriteLine("\nGoodbye.");
                         break;
                     default:
-                        Console.WriteLine("\nInvalid selection! Try again.");
+                        Console.Clear();
+                        Color("\nInvalid selection! Try again.", ConsoleColor.Red);
                         break;
                 }
             } while (selection != 'Q');
@@ -46,7 +48,6 @@ namespace VehiclePractice
 
         static void DisplayMenu()
         {
-            Console.WriteLine("\nWelcome to your vehicle inventory");
             Console.WriteLine("----------------------------------");
             Console.WriteLine("Please select from one of the folowing options:");
             Console.WriteLine("\nD - Display vehicles");
@@ -100,17 +101,19 @@ namespace VehiclePractice
                             SortBy(v => v.MPG);
                             break;
                         case "Q":
-                            Console.WriteLine("Back to main menu...");
+                            Console.Clear();
+                            Color("Back to main menu...", ConsoleColor.Yellow);
                             break;
                         default:
-                            Console.WriteLine("Invalid selection! Try again.");
+                            Console.Clear();
+                            Color("Invalid selection! Try again.", ConsoleColor.Red);
                             break;
                     }
                 } while (displaySelection != "Q");
             }
             else
             {
-                Console.WriteLine("\nYour inventory is empty. Please add a vehicle first.");
+                Color("\nYour inventory is empty. Please add a vehicle first.", ConsoleColor.Yellow);
             }
         }
 
@@ -126,6 +129,9 @@ namespace VehiclePractice
         static void SortBy(Func<Vehicle, IComparable> getProp)
         {
             List<Vehicle> sortedList = vehicles.OrderBy(v => getProp(v)).ToList();
+            Console.Clear();
+            Console.WriteLine("Here are your vehicles:");
+            Console.WriteLine("-----------------------------");
             foreach(Vehicle v in sortedList)
             {
                 Console.WriteLine(v.ToString());
@@ -157,7 +163,7 @@ namespace VehiclePractice
                         Console.WriteLine("\nBack to main menu...");
                         break;
                     default:
-                        Console.WriteLine("\nInvalid Selection! Try again.");
+                        Color("\nInvalid Selection! Try again.", ConsoleColor.Red);
                         break;
                 }
             } while(typeSelection != 'C' && typeSelection != 'T' && typeSelection != 'Q');
@@ -195,7 +201,7 @@ namespace VehiclePractice
                         hatch = false;
                         break;
                     default:
-                        Console.WriteLine("\nInvalid selection! Try again.");
+                        Color("\nInvalid selection! Try again.", ConsoleColor.Red);
                         break;
                 }
             } while (hatchSelection != 'Y' && hatchSelection != 'N');
@@ -205,8 +211,9 @@ namespace VehiclePractice
             Car carToAdd = new Car(vin, year, make, model, color, mpg, type, hatch);
             vehicles.Add(carToAdd);
 
-            Console.WriteLine("************************");
-            Console.WriteLine("Car added.");
+            Console.Clear();
+            Console.WriteLine("\n************************");
+            Color("Car added!", ConsoleColor.Cyan);
             Console.WriteLine(carToAdd.ToString());
             Console.WriteLine("************************");
 
@@ -247,39 +254,57 @@ namespace VehiclePractice
                         tow = false;
                         break;
                     default:
-                        Console.WriteLine("Invalid selection! Try again.");
+                        Color("Invalid selection! Try again.", ConsoleColor.Red);
                         break;
                 }
-            } while (towSelection != 'Y' || towSelection != 'N');
+            } while (towSelection != 'Y' && towSelection != 'N');
 
             Truck truckToAdd = new Truck(vin, year, make, model, color, mpg, tow, wheels);
             vehicles.Add(truckToAdd);
-            Console.WriteLine("Truck added.");
+            Console.WriteLine("************************");
+            Color("Truck added.", ConsoleColor.Cyan);
             Console.WriteLine(truckToAdd.ToString());
+            Console.WriteLine("************************");
 
         }
 
         static void HandleRemove()
         {
-            int index = -1;
-            string vinToDelete = "";
-            do
+            if(vehicles.Count > 0)
             {
-                HandleRecent();
-                Console.Write("Enter the vin# of the vehicle you want to delete: ");
-                vinToDelete = Console.ReadLine();
-                index = vehicles.FindIndex(v => v.VinNumber == vinToDelete);
-                switch (index)
+                int index = -1;
+                string vinToDelete = "";
+                do
                 {
-                    case -1:
-                        Console.WriteLine("Vehicle not found. Try again.");
-                        break;
-                    default:
-                        vehicles.RemoveAt(index);
-                        Console.WriteLine("Vehicle removed.");
-                        break;
-                }
-            } while (index == -1);
+                    Console.WriteLine();
+                    HandleRecent();
+                    Console.Write("Enter the vin# of the vehicle you want to delete: ");
+                    vinToDelete = Console.ReadLine();
+                    index = vehicles.FindIndex(v => v.VinNumber == vinToDelete);
+                    switch (index)
+                    {
+                        case -1:
+                            Console.Clear();
+                            Color("\nVehicle not found. Try again.", ConsoleColor.Red);
+                            break;
+                        default:
+                            vehicles.RemoveAt(index);
+                            Console.WriteLine("Vehicle removed.");
+                            break;
+                    }
+                } while (index == -1);
+            }
+            else
+            {
+                Color("\nThere are no vehicles in your collection", ConsoleColor.Yellow);
+            }
+        }
+
+        static void Color(string text, ConsoleColor color)
+        {
+            Console.ForegroundColor = color;
+            Console.WriteLine(text);
+            Console.ResetColor();
         }
 
     }
