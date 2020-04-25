@@ -17,9 +17,11 @@ namespace VehiclePractice
             Console.WriteLine("\nWelcome to your vehicle inventory");
             do
             {
+                // displays options for user to enter
                 DisplayMenu();
-                selection = GetSelection();
-                switch(selection)
+                selection = GetSelection(); // sets global selection variable
+                
+                switch(selection) // calls different methods depending on user choice
                 {
                     case 'D':
                         Console.Clear();
@@ -63,6 +65,7 @@ namespace VehiclePractice
             return char.ToUpper(selection);
         }
 
+        //handles sub-options for when user wants to display all vehicles
         static void HandleDisplay()
         {
             if(vehicles.Count > 0)
@@ -117,15 +120,19 @@ namespace VehiclePractice
             }
         }
 
+        // sorts vehicles by most recently added
         static void HandleRecent()
         {
-            foreach(Vehicle v in vehicles)
+            List<Vehicle> recentFirst = new List<Vehicle>(vehicles);
+            recentFirst.Reverse();
+            foreach(Vehicle v in recentFirst)
             {
                 Console.WriteLine(v.ToString());
                 Console.WriteLine("------------------------------");
             }
         }
 
+        // sorts vehicles by the property specified in the getProp parameter
         static void SortBy(Func<Vehicle, IComparable> getProp)
         {
             List<Vehicle> sortedList = vehicles.OrderBy(v => getProp(v)).ToList();
@@ -169,6 +176,7 @@ namespace VehiclePractice
             } while(typeSelection != 'C' && typeSelection != 'T' && typeSelection != 'Q');
         }
 
+        // sequence of prompts for add a Car to the vehicles list
         static void HandleAddCar()
         {
             string vin, make, model, color, type;
@@ -220,6 +228,7 @@ namespace VehiclePractice
 
         }
 
+        // sequence of prompts for add a Truck to the vehicles list
         static void HandleAddTruck()
         {
             string vin, make, model, color;
@@ -268,6 +277,7 @@ namespace VehiclePractice
 
         }
 
+        // prompts to remove a Vehicle from list if there are any in the list
         static void HandleRemove()
         {
             if(vehicles.Count > 0)
@@ -300,6 +310,7 @@ namespace VehiclePractice
             }
         }
 
+        // Writes the given text to the console in the given forground color
         static void Color(string text, ConsoleColor color)
         {
             Console.ForegroundColor = color;
